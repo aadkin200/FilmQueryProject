@@ -1,5 +1,7 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 public class Film {
 	private int id;
 	private String title;
@@ -12,15 +14,50 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
+	List<Actor> actorList;
+	String lang;
 
 	
 	
 	
-	
-	
-	
-	
-public Film(int id, String title, String description, Integer year, int languageId, int rental_duration,
+	public Film(int id, String title, String description, Integer year, int languageId, int rental_duration,
+			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures,
+			List<Actor> actorList, String lang) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.year = year;
+		this.languageId = languageId;
+		this.rental_duration = rental_duration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		this.actorList = actorList;
+		this.lang = lang;
+	}
+
+	public Film(int id, String title, String description, Integer year, int languageId, int rental_duration,
+			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures,
+			List<Actor> actorList) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.year = year;
+		this.languageId = languageId;
+		this.rental_duration = rental_duration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		this.actorList = actorList;
+	}
+
+	public Film(int id, String title, String description, Integer year, int languageId, int rental_duration,
 			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures) {
 		super();
 		this.id = id;
@@ -35,14 +72,33 @@ public Film(int id, String title, String description, Integer year, int language
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
 	}
+	public Film(int id, String title, String description, Integer year, int languageId, int rental_duration,
+			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures, String lang) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.year = year;
+		this.languageId = languageId;
+		this.rental_duration = rental_duration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		this.actorList = actorList;
+		this.lang = lang;
+	}
+	
 
-//	hash and equals block
 @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actorList == null) ? 0 : actorList.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((lang == null) ? 0 : lang.hashCode());
 		result = prime * result + languageId;
 		result = prime * result + ((length == null) ? 0 : length.hashCode());
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
@@ -67,12 +123,22 @@ public Film(int id, String title, String description, Integer year, int language
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actorList == null) {
+			if (other.actorList != null)
+				return false;
+		} else if (!actorList.equals(other.actorList))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
+			return false;
+		if (lang == null) {
+			if (other.lang != null)
+				return false;
+		} else if (!lang.equals(other.lang))
 			return false;
 		if (languageId != other.languageId)
 			return false;
@@ -110,13 +176,12 @@ public Film(int id, String title, String description, Integer year, int language
 		return true;
 	}
 
-	//	toString block
 	@Override
 	public String toString() {
-		return "id: " + id + " || title: " + title + " || description: " + description + " || year: " + year
-				+ " || languageId: " + languageId + " || rental_duration: " + rental_duration + " || rentalRate: " + rentalRate
-				+ " || length: " + length + " || replacementCost: " + replacementCost + " || rating: " + rating
-				+ " || specialFeatures: " + specialFeatures;
+		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", year=" + year
+				+ ", languageId=" + languageId + ", rental_duration=" + rental_duration + ", rentalRate=" + rentalRate
+				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
+				+ ", specialFeatures=" + specialFeatures + ", actorList=" + actorList + ", lang=" + lang + "]";
 	}
 
 	// getters/setters block
@@ -207,5 +272,25 @@ public Film(int id, String title, String description, Integer year, int language
 	public void setSpecialFeatures(String specialFeatures) {
 		this.specialFeatures = specialFeatures;
 	}
+
+	public List<Actor> getActorList() {
+		return actorList;
+	}
+
+	public void setActorList(List<Actor> actorList) {
+		this.actorList = actorList;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	
+	
+	
 
 }
