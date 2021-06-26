@@ -3,7 +3,6 @@
 ## Overview
 This console application is used to pull information from a not-real mad libs generated database. It contains Customer Data (such as address, names, creation dates, country), Business data (rental store ID's, staff, movie rentals, payments), and films(titles, film categories, actors, languages, inventory). While the database contains all this information, this console application only allows the viewing of movies and their actors. </br>
 
-you can search a movie up by its Id or search a list of movies using a keyword. The menu is easy to follow along by pressing 1, 2, or 3.
 
 <p float="left">
 <img src="pngegg.png" alt = "git" width="100" height="100" align="center"/>
@@ -27,4 +26,5 @@ you can search a movie up by its Id or search a list of movies using a keyword. 
 
 
 ### Usage
-This program was written with the thought of being able to reuse classes in other programs. The Card, Suit, Rank, and Hand classes can be reused to create other card based games. To use this program, just download the code and run it within your own IDE.
+you can search a movie up by its Id or search a list of movies using a keyword. The menu is easy to follow along by pressing 1, 2, or 3.
+
