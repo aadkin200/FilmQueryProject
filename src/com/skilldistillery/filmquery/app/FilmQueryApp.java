@@ -1,8 +1,9 @@
 package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -26,11 +27,11 @@ public class FilmQueryApp {
 		Film film = db.findFilmById(1);
 		Actor actor = db.findActorById(1);
 		List<Actor> actorList = db.findActorsByFilmId(6);
-		List<Film> filmList = db.findFilmByKeyword("feminist");
+//		List<Film> filmList = db.findFilmByKeyword("feminist");
 //    System.out.println(film);
 //    System.out.println(actor);
 //    System.out.println(actorList);
-		System.out.println(filmList);
+//		System.out.println(filmList);
 	}
 
 	private void launch() throws SQLException {
@@ -80,16 +81,16 @@ public class FilmQueryApp {
 		System.out.println("Please enter a search word: ");
 		String choice = input.nextLine();
 		System.out.println(choice);
-		List<Film> filmList = db.findFilmByKeyword(choice);
-		Set<Film> filmSet = new HashSet<>(filmList);
-		if (!filmList.equals(null)) {
-			for (Film film : filmSet) {
-				printFilm(film);
+		Map<Integer, Film> filmMap = db.findFilmByKeyword(choice);
+		Set<Integer> keySet = filmMap.keySet();
+		if (!filmMap.equals(null)) {
+			for (Integer filmID : keySet) {
+				printFilm(filmMap.get(filmID));
 			}
+			
 		} else {
 			System.out.println("No films found!");
 		}
-
 	}
 
 	private void exit() {

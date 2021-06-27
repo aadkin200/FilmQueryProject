@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
@@ -123,10 +125,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public List<Film> findFilmByKeyword(String keyword) {
-		Film film = null;
-		Actor actor = null;
-		List<Film> filmList = new ArrayList<>();
+	public Map<Integer, Film> findFilmByKeyword(String keyword) {
+		Film film;
+//		Actor actor;
+		Map<Integer, Film> filmList = new HashMap<>();
 		List<Actor> actorList = null;
 		Connection conn = null;
 		try {
@@ -144,7 +146,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
-//			System.out.println(stmt);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int filmIds = rs.getInt("film.id");
@@ -164,7 +165,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actorList = findActorsByFilmId(filmIds);
 				film = new Film(filmIds, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating,
 						features, actorList, name);
-				filmList.add(film);
+				filmList.put(film.getId(), film);
 			}
 			rs.close();
 		    stmt.close();
