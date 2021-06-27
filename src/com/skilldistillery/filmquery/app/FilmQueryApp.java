@@ -1,9 +1,10 @@
 package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
@@ -75,13 +76,14 @@ public class FilmQueryApp {
 		}
 	}
 
-	private void filmBySearch() {
+	private void filmBySearch() throws SQLException {
 		System.out.println("Please enter a search word: ");
 		String choice = input.nextLine();
 		System.out.println(choice);
 		List<Film> filmList = db.findFilmByKeyword(choice);
+		Set<Film> filmSet = new HashSet<>(filmList);
 		if (!filmList.equals(null)) {
-			for (Film film : filmList) {
+			for (Film film : filmSet) {
 				printFilm(film);
 			}
 		} else {

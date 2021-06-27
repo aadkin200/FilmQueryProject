@@ -26,7 +26,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public Film findFilmById(int filmId) throws SQLException {
+	public Film findFilmById(int filmId) {
 		Film film = null;
 		Language lang = null;
 		List<Actor> actorList = findActorsByFilmId(filmId);
@@ -59,6 +59,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film = new Film(filmIds, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating,
 						features, actorList, name);
 			}
+			rs.close();
+		    stmt.close();
+		    conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -68,8 +71,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	@Override
 	public Actor findActorById(int actorId) {
 		Actor actor = null;
+		Connection conn = null;
 		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
+			conn = DriverManager.getConnection(URL, user, pass);
 			String sql = " select * from actor where id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, actorId);
@@ -80,6 +84,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String lastName = rs.getString("actor.last_name");
 				actor = new Actor(actorIds, firstName, lastName);
 			}
+			rs.close();
+		    stmt.close();
+		    conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +94,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public List<Actor> findActorsByFilmId(int filmId) throws SQLException {
+	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> actorList = new ArrayList<>();
 		Actor actor = null;
 		Connection conn = null;
@@ -106,10 +113,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				actor = new Actor(actorIds, firstName, lastName);
 				actorList.add(actor);
 			}
+			rs.close();
+		    stmt.close();
+		    conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conn.close();
 		return actorList;
 	}
 
@@ -119,8 +128,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Actor actor = null;
 		List<Film> filmList = new ArrayList<>();
 		List<Actor> actorList = null;
+		Connection conn = null;
 		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
+			conn = DriverManager.getConnection(URL, user, pass);
 			String sql = "Select *\n"
 					+ "FROM film\n"
 					+ "JOIN language\n"
@@ -134,7 +144,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
-			System.out.println(stmt);
+//			System.out.println(stmt);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int filmIds = rs.getInt("film.id");
@@ -156,6 +166,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 						features, actorList, name);
 				filmList.add(film);
 			}
+			rs.close();
+		    stmt.close();
+		    conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
